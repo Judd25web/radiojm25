@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRadio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: url('bg5.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .player-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .player-container button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+        .player-container button img {
+            width: 30px;
+            height: 30px;
+        }
+        input[type="range"] {
+            appearance: none;
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(to right, #d3c9c8ff, #b06784ff);
+            border-radius: 5px;
+            outline: none;
+            margin-left: 20px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .scrolling-text {
+            position: fixed;
+            top: 50px;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            color: white;
+            font-size: 18px;
+           background: linear-gradient(to right, #ffffff00, #ffffff30, #ffffff00);
+            padding: 10px 0;
+	    font-style: italic;
+
+
+        }
+        .scrolling-text div {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0%); }
+            to { transform: translateX(-100%); }
+        }
+        .central-image {
+            max-width: 55%;
+            height: auto;
+            margin-top: 150px;
+        }
+	.program-image {
+            max-width: 50%;
+            height: auto;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <button onclick="playRadio()">
+            <img src="play.png" alt="Play">
+        </button>
+        <button onclick="pauseRadio()">
+            <img src="pause.png" alt="Pause">
+        </button>
+        <input type="range" min="0" max="1" step="0.1" onchange="setVolume(this.value)">
+    </div>
+    <div class="scrolling-text">
+        <div id="scrollText"></div>
+    </div>
+    <img src="1234.png" alt="Logo" class="central-image">
+    <img src="program.png" alt="Logo" class="program-image">
+
+    <audio id="radio" src="https://radio.radiojm.site/radio" preload="none"></audio>
+    <script>
+        const radio = document.getElementById('radio');
+        function playRadio() { radio.play(); }
+        function pauseRadio() { radio.pause(); }
+        function setVolume(value) { radio.volume = value; }
+
+        const messages = [
+    "💖 'O amor não se vê com os olhos, mas com o coração.' – William Shakespeare",
+    "💕 'Amar não é olhar um para o outro, é olhar juntos na mesma direção.' – Antoine de Saint-Exupéry",
+    "💘 'A medida do amor é amar sem medida.' – Santo Agostinho",
+    "❤️ 'Você é a razão do meu sorriso e o brilho nos meus olhos.' – Desconhecido",
+    "💓 'Se eu sei o que é amor, é por sua causa.' – Hermann Hesse",
+    "🌹 'O amor é composto de uma única alma habitando dois corpos.' – Aristóteles",
+    "💞 'Te amo não pelo que você é, mas pelo que sou quando estou com você.' – Elizabeth Barrett Browning",
+    "💗 'Onde há amor, há vida.' – Mahatma Gandhi",
+    "💖 'Você me faz feliz de um jeito que ninguém mais consegue.' – Desconhecido",
+    "💑 'Prefiro um minuto ao seu lado do que uma vida inteira sem você.' – Desconhecido",
+    "🌺 'A melhor coisa para se agarrar na vida é um ao outro.' – Audrey Hepburn",
+    "💜 'O amor é uma flor que você tem que deixar crescer.' – John Lennon",
+    "💘 'A felicidade da vida consiste no amor que damos e recebemos.' – Victor Hugo",
+    "🌟 'Amar alguém é ver um milagre invisível aos olhos.' – François Mauriac",
+    "🌙 'O amor verdadeiro nunca se desgasta. Quanto mais se dá, mais se tem.' – Antoine de Saint-Exupéry",
+    "💞 'Amor é quando a felicidade do outro é essencial para a sua própria felicidade.' – Robert Heinlein",
+    "🔥 'Te amo mais do que ontem e menos do que amanhã.' – Edmond Rostand",
+    "🌹'Se eu tivesse uma flor para cada vez que penso em você, poderia andar para sempre em meu jardim.' – Alfred Tennyson",
+    "🎶 'O amor é a única loucura de um sábio e a única sabedoria de um tolo.' – William Shakespeare",
+    "💖 'O verdadeiro amor nunca se desgasta. Quanto mais se dá, mais se tem.' – Antoine de Saint-Exupéry",
+    "🌹 'Cada batida do meu coração é um 'eu te amo' que envio para você.' – Desconhecido",
+    "💑 'Dizem que você só se apaixona uma vez, mas isso não pode ser verdade... Eu me apaixono por você todos os dias.' – Desconhecido",
+    "🌟 'O amor é uma força mais formidável que qualquer outra. Ele é invisível – não pode ser visto ou medido – mas é poderoso o suficiente para transformar você em um momento.' – Barbara de Angelis",
+    "🎤 'Você é cada razão, cada esperança e cada sonho que já tive.' – Nicholas Sparks",
+    "💗 'O amor é uma promessa; o amor é um presente; uma vez dado, nunca se esquece, nunca desaparece.' – John Lennon",
+    "💖 'Se amar fosse um crime, eu passaria a vida inteira preso ao seu lado.' – Desconhecido",
+    "🎵 'O amor é a poesia dos sentidos.' – Honoré de Balzac",
+    "💞 'Você tem meu coração e minha alma, para sempre.' – Desconhecido",
+    "💑 'Nosso amor é como o vento: não posso vê-lo, mas posso senti-lo.' – Nicholas Sparks",
+    "🌹 'O amor não é sobre como você esquece, mas como você perdoa.' – Desconhecido",
+    "🎶 'O amor verdadeiro é colocar as necessidades de outra pessoa antes das suas.' – Frozen",
+    "🔥 'Você é o sonho que eu nunca quis acordar.' – Desconhecido",
+    "💖 'A maior felicidade da vida é estar convencido de que somos amados.' – Victor Hugo",
+    "💕 'Nada se compara ao amor que sinto por você.' – Desconhecido",
+    "💗 'Seu amor é a melodia perfeita da minha vida.' – Desconhecido",
+    "🎤 'Te amei ontem, te amo hoje, e te amarei para sempre.' – Desconhecido",
+    "💞 'O verdadeiro amor nunca acaba, ele cresce com o tempo.' – Desconhecido",
+    "🌟 'Você é a melhor parte do meu dia, todos os dias.' – Desconhecido",
+    "💘 'Se amar é loucura, então nunca quero ser são.' – Desconhecido",
+    "❤️ 'Cada momento ao seu lado é uma eternidade de felicidade.' – Desconhecido",
+    "🌹 'Nosso amor é a minha maior aventura.' – Desconhecido",
+    "💑 'O amor é um segredo que os olhos não sabem esconder.' – Desconhecido",
+    "🎵 'Você faz meu coração dançar ao ritmo do amor.' – Desconhecido",
+    "💞 'O amor não é algo que encontramos, é algo que construímos.' – Desconhecido",
+    "🔥 'Seu amor ilumina minha vida como um raio de sol.' – Desconhecido",
+    "💜 'O amor é a única resposta para todas as perguntas.' – Desconhecido",
+    "🎤 'Se o amor fosse um perfume, o seu seria o meu favorito.' – Desconhecido",
+    "💗 'Nosso amor é como uma chama que nunca se apaga.' – Desconhecido",
+    "💖 'Você é o sorriso no meu rosto e a luz nos meus olhos.' – Desconhecido",
+    "🎶 'O amor é o que dá sentido à vida.' – Desconhecido",
+    "🌟 'Estar ao seu lado é meu lugar favorito no mundo.' – Desconhecido",
+    "💘 'Nosso amor é infinito como as estrelas no céu.' – Desconhecido",
+    "💕 'Cada 'eu te amo' é sincero e eterno.' – Desconhecido",
+    "💑 'Você é o capítulo mais bonito da minha história.' – Desconhecido",
+    "🌹 'O amor nos torna completos.' – Desconhecido",
+    "🔥 'Nada é mais doce do que um beijo roubado de você.' – Desconhecido",
+    "💜 'O amor é a poesia da alma.' – Desconhecido",
+    "🎤 'Cada segundo sem você é um desperdício de tempo.' – Desconhecido",
+    "💗 'Com você, tudo faz sentido.' – Desconhecido",
+    "💖 'Se há amor, há tudo.' – Desconhecido",
+    "🎶 'O amor é o maior presente que podemos dar e receber.' – Desconhecido",
+    "🌟 'O amor não tem preço, mas vale tudo.' – Desconhecido",
+    "💘 'Cada toque seu é pura magia.' – Desconhecido",
+    "💕 'Eu prometo te amar para sempre, a cada batida do meu coração.' – Desconhecido"
+        ];
+        document.getElementById('scrollText').textContent = messages[Math.floor(Math.random() * messages.length)];
+    </script>
+</body>
+</html>
